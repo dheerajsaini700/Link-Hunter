@@ -100,6 +100,19 @@ fun SecureSandboxScreen(url: String, onBack: () -> Unit) {
                                 showPermissionWarning = true
                                 request.deny() 
                             }
+
+                            // CRITICAL SECURITY: Block all File/Gallery/Photo access
+                            override fun onShowFileChooser(
+                                webView: WebView?,
+                                filePathCallback: android.webkit.ValueCallback<Array<android.net.Uri>>?,
+                                fileChooserParams: FileChooserParams?
+                            ): Boolean {
+                                interceptedPermission = "Gallery / Local Files"
+                                showPermissionWarning = true
+                                // Handled: Tell the web engine we canceled the picker
+                                filePathCallback?.onReceiveValue(null)
+                                return true
+                            }
                         }
                         
                         loadUrl(url)
