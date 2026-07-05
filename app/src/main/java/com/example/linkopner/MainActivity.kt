@@ -57,6 +57,7 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
     
     var totalScanned by remember { mutableStateOf(statsManager.getScannedCount()) }
     var totalSuspicious by remember { mutableStateOf(statsManager.getSuspiciousCount()) }
+    var totalNeutralized by remember { mutableStateOf(statsManager.getNeutralizedCount()) }
 
     // Manual Scan Trigger from Settings
     val onManualScan: (String) -> Unit = { url ->
@@ -111,6 +112,8 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
                 url = urlToAnalyze,
                 scanResult = scanResult,
                 onGoBack = {
+                    statsManager.incrementNeutralized()
+                    totalNeutralized = statsManager.getNeutralizedCount()
                     currentScreen = Screen.SETTINGS
                 },
                 onProceed = {
@@ -122,7 +125,8 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
             SettingsDashboardScreen(
                 onScanUrl = onManualScan,
                 scannedCount = totalScanned,
-                suspiciousCount = totalSuspicious
+                suspiciousCount = totalSuspicious,
+                neutralizedCount = totalNeutralized
             )
         }
         Screen.SANDBOX -> {

@@ -28,7 +28,12 @@ import com.example.linkopner.ui.theme.NeonGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsDashboardScreen(onScanUrl: (String) -> Unit, scannedCount: Int, suspiciousCount: Int) {
+fun SettingsDashboardScreen(
+    onScanUrl: (String) -> Unit, 
+    scannedCount: Int, 
+    suspiciousCount: Int,
+    neutralizedCount: Int
+) {
     var autoScan by remember { mutableStateOf(true) }
     var blockIps by remember { mutableStateOf(true) }
     var manualUrl by remember { mutableStateOf("") }
@@ -181,7 +186,7 @@ fun SettingsDashboardScreen(onScanUrl: (String) -> Unit, scannedCount: Int, susp
                 icon = Icons.Default.History,
                 title = "Recent Hunter Activity",
                 value = "View Full Logs",
-                trend = "3 threats neutralized today"
+                trend = "$neutralizedCount threats neutralized today"
             )
             
             Spacer(modifier = Modifier.height(24.dp))

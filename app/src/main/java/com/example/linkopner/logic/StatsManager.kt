@@ -8,6 +8,7 @@ class StatsManager(context: Context) {
 
     fun getScannedCount(): Int = prefs.getInt("scanned_count", 0)
     fun getSuspiciousCount(): Int = prefs.getInt("suspicious_count", 0)
+    fun getNeutralizedCount(): Int = prefs.getInt("neutralized_count", 0)
 
     fun incrementScanned() {
         val current = getScannedCount()
@@ -17,5 +18,10 @@ class StatsManager(context: Context) {
     fun incrementSuspicious() {
         val current = getSuspiciousCount()
         prefs.edit().putInt("suspicious_count", current + 1).apply()
+    }
+
+    fun incrementNeutralized() {
+        val current = getNeutralizedCount()
+        prefs.edit().putInt("neutralized_count", current + 1).apply()
     }
 }
