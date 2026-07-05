@@ -95,9 +95,17 @@ fun SafeResultScreen(url: String, scanResult: ScanResult?, onOpenInChrome: () ->
                     
                     AnalysisItem(label = "Domain", value = scanResult?.domain ?: "Unknown")
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                    AnalysisItem(label = "Security Score", value = "${100 - (scanResult?.maliciousProbability ?: 0)}/100 Safe")
+                    
+                    if (scanResult?.isVtVerified == true) {
+                        AnalysisItem(label = "VirusTotal Malicious", value = scanResult.vtMalicious.toString())
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
+                        AnalysisItem(label = "VirusTotal Clean", value = (scanResult.vtHarmless + scanResult.vtUndetected).toString())
+                    } else {
+                        AnalysisItem(label = "Security Score", value = "${100 - (scanResult?.maliciousProbability ?: 0)}/100 Safe")
+                    }
+                    
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                    AnalysisItem(label = "Known Phishing", value = "No threats found")
+                    AnalysisItem(label = "Status", value = "Clean / Trusted")
                 }
             }
         }
