@@ -23,12 +23,21 @@ object UrlScanner {
 
     fun scan(url: String): ScanResult {
         val uri = Uri.parse(url)
-        val host = uri.host?.lowercase() ?: ""
+        var host = uri.host?.lowercase() ?: ""
+        
+        // Robust domain extraction if Uri.host fails (e.g. missing scheme)
+        if (host.isEmpty()) {
+            host = url.substringBefore("/").substringAfter("://").lowercase()
+        }
+        
+        // Final fallback to clean the host string
+        val displayDomain = if (host.isNotEmpty()) host else "Unknown Domain"
+
         var score = 0
         var threatType: String? = null
         var threatDescription: String? = null
 
-        // 1. Homograph Detection (Simple demo version)
+        // 1. Homograph Detection
         if (host.contains("g00gle") || host.contains("paypa1") || host.contains("fac3book")) {
             score += 80
             threatType = "Homograph Attack"
@@ -65,7 +74,7 @@ object UrlScanner {
             threatType = threatType,
             threatDescription = threatDescription,
             maliciousProbability = score.coerceAtMost(100),
-            domain = host
+            domain = displayDomain
         )
     }
 }
