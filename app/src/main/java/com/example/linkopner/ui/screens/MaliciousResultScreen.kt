@@ -120,6 +120,7 @@ fun MaliciousResultScreenPreview() {
     LinkopnerTheme(darkTheme = true) {
         MaliciousResultScreen(
             url = "https://g00gle.com/login",
+            scanResult = null,
             onGoBack = {},
             onProceed = {}
         )

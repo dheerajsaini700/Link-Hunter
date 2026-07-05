@@ -119,6 +119,6 @@ fun AnalysisItem(label: String, value: String) {
 @Composable
 fun SafeResultScreenPreview() {
     LinkopnerTheme(darkTheme = true) {
-        SafeResultScreen(url = "https://www.google.com", onOpenInChrome = {})
+        SafeResultScreen(url = "https://www.google.com", scanResult = null, onOpenInChrome = {})
     }
 }
