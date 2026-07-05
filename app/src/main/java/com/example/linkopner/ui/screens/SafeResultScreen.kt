@@ -15,11 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.linkopner.logic.ScanResult
 import com.example.linkopner.ui.theme.LinkopnerTheme
 import com.example.linkopner.ui.theme.NeonGreen
 
 @Composable
-fun SafeResultScreen(url: String, onOpenInChrome: () -> Unit) {
+fun SafeResultScreen(url: String, scanResult: ScanResult?, onOpenInChrome: () -> Unit) {
     Scaffold(
         bottomBar = {
             Column(modifier = Modifier.padding(24.dp)) {
@@ -92,9 +93,9 @@ fun SafeResultScreen(url: String, onOpenInChrome: () -> Unit) {
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     
-                    AnalysisItem(label = "Domain", value = "google.com")
+                    AnalysisItem(label = "Domain", value = scanResult?.domain ?: "Unknown")
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
-                    AnalysisItem(label = "SSL Status", value = "Valid Certificate")
+                    AnalysisItem(label = "Security Score", value = "${100 - (scanResult?.maliciousProbability ?: 0)}/100 Safe")
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
                     AnalysisItem(label = "Known Phishing", value = "No threats found")
                 }

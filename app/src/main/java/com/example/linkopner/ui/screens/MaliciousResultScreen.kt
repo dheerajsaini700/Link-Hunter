@@ -13,11 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.linkopner.logic.ScanResult
 import com.example.linkopner.ui.theme.LinkopnerTheme
 import com.example.linkopner.ui.theme.BrightCrimson
 
 @Composable
-fun MaliciousResultScreen(url: String, onGoBack: () -> Unit, onProceed: () -> Unit) {
+fun MaliciousResultScreen(url: String, scanResult: ScanResult?, onGoBack: () -> Unit, onProceed: () -> Unit) {
     Scaffold(
         bottomBar = {
             Column(
@@ -80,7 +81,7 @@ fun MaliciousResultScreen(url: String, onGoBack: () -> Unit, onProceed: () -> Un
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "Threat Detected",
+                        text = scanResult?.threatType ?: "Threat Detected",
                         style = MaterialTheme.typography.labelLarge,
                         color = BrightCrimson,
                         fontWeight = FontWeight.Bold
@@ -88,7 +89,7 @@ fun MaliciousResultScreen(url: String, onGoBack: () -> Unit, onProceed: () -> Un
                     Spacer(modifier = Modifier.height(12.dp))
                     
                     Text(
-                        text = "Homograph attack detected: g00gle.com instead of google.com. This website is attempting to impersonate another service to steal your information.",
+                        text = scanResult?.threatDescription ?: "This website is attempting to impersonate another service to steal your information.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )

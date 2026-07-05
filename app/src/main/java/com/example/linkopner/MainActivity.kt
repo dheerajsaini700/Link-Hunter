@@ -100,6 +100,7 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
         Screen.SAFE_RESULT -> {
             SafeResultScreen(
                 url = urlToAnalyze,
+                scanResult = scanResult,
                 onOpenInChrome = {
                     currentScreen = Screen.SANDBOX 
                 }
@@ -108,6 +109,7 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
         Screen.MALICIOUS_RESULT -> {
             MaliciousResultScreen(
                 url = urlToAnalyze,
+                scanResult = scanResult,
                 onGoBack = {
                     currentScreen = Screen.SETTINGS
                 },
