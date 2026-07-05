@@ -55,27 +55,29 @@ fun LinkScrubberApp(passedUrl: String?, statsManager: StatsManager) {
     var urlToAnalyze by remember { mutableStateOf(passedUrl ?: "") }
     var scanResult by remember { mutableStateOf<ScanResult?>(null) }
     
-    // State for real-time stats
     var totalScanned by remember { mutableStateOf(statsManager.getScannedCount()) }
     var totalSuspicious by remember { mutableStateOf(statsManager.getSuspiciousCount()) }
 
     // Manual Scan Trigger from Settings
     val onManualScan: (String) -> Unit = { url ->
         urlToAnalyze = url
+        scanResult = null // Reset previous result
         currentScreen = Screen.SCANNING
     }
 
-    // When a new URL comes in from outside the app
+    // Handle Intent-based URL changes
     LaunchedEffect(passedUrl) {
-        if (passedUrl != null) {
+        if (passedUrl != null && passedUrl != urlToAnalyze) {
             urlToAnalyze = passedUrl
+            scanResult = null // Reset previous result
             currentScreen = Screen.SCANNING
         }
     }
 
+    // The Scanning Process
     LaunchedEffect(currentScreen, urlToAnalyze) {
-        if (currentScreen == Screen.SCANNING && urlToAnalyze.isNotEmpty()) {
-            delay(800) // Reduced simulation time from 2000ms to 800ms
+        if (currentScreen == Screen.SCANNING && urlToAnalyze.isNotEmpty() && scanResult == null) {
+            delay(1200) // Slightly longer to feel more realistic
             val result = UrlScanner.scan(urlToAnalyze)
             
             // Update Real Stats
