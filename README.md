@@ -11,7 +11,7 @@
 *   **Neural Link Analysis**: Detects Homograph attacks (fake domains), suspicious keywords, and IP-based URLs.
 *   **Secure Sandbox**: 
     *   **Isolated Browser Engine**: Loads links in a private environment separate from your system browser.
-    *   **Hardware Shield**: Intercepts and blocks all requests for Camera, Microphone, and Contacts.
+    *   **Hardware Shields**: Intercepts and blocks all requests for Camera, Microphone, and Contacts.
     *   **Data Isolation**: No shared cookies or session data with other apps.
 *   **3D Modern Dashboard**: Real-time tracking of scanned links and detected threats with a sleek, "Cyber-Hunter" aesthetic.
 
